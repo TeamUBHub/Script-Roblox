@@ -25,7 +25,7 @@ jobs:
     # Step 3: Sync to Azure DevOps
     - name: Sync to Azure DevOps
       env:
-        AZURE_PAT: ${{ secrets.AZ_PAT }}
+        AZ_PAT: ${{ secrets.AZ_PAT }}
       run: |
         git remote add azure https://muhammadrhuda2025@dev.azure.com/muhammadrhuda2025/UBHub/_git/Script-Roblox
         git config --global http.https://dev.azure.com/.extraheader "AUTHORIZATION: bearer $AZ_PAT"
