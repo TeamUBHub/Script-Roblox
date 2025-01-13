@@ -1,0 +1,37 @@
+name: Sync GitHub to Azure DevOps
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow when there is a push to the 'main' branch
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest  # Run the job on the latest Ubuntu environment
+
+    steps:
+    # Step 1: Checkout the GitHub Repository with full history
+    - name: Checkout GitHub Repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # This ensures that the full history is fetched (not shallow)
+
+    # Step 2: Set up Git
+    - name: Set up Git
+      run: |
+        git config --global user.name "Muhammad H"
+        git config --global user.email "you@example.com"
+
+    # Step 3: Sync to Azure DevOps
+    - name: Sync to Azure DevOps
+      env:
+        AZURE_PAT: ${{ secrets.AZURE_PAT }}  # Reference the secret for Azure PAT
+      run: |
+        # Add Azure DevOps remote repository
+        git remote add azure https://muhammadrhuda2025@dev.azure.com/muhammadrhuda2025/UBHub/_git/UBLoader
+
+        # Authenticate using the Azure PAT
+        git config --global http.https://dev.azure.com/.extraheader "AUTHORIZATION: bearer $AZURE_PAT"
+
+        # Force push changes to Azure DevOps repository
+        git push azure main --force
