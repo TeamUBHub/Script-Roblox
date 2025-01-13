@@ -3,18 +3,18 @@ name: Sync GitHub to Azure DevOps
 on:
   push:
     branches:
-      - main  # Trigger the workflow when there is a push to the 'main' branch
+      - main
 
 jobs:
   sync:
-    runs-on: ubuntu-latest  # Run the job on the latest Ubuntu environment
+    runs-on: ubuntu-latest 
 
     steps:
     # Step 1: Checkout the GitHub Repository with full history
     - name: Checkout GitHub Repository
       uses: actions/checkout@v3
       with:
-        fetch-depth: 0  # This ensures that the full history is fetched (not shallow)
+        fetch-depth: 0 
 
     # Step 2: Set up Git
     - name: Set up Git
@@ -25,10 +25,10 @@ jobs:
     # Step 3: Sync to Azure DevOps
     - name: Sync to Azure DevOps
       env:
-        AZURE_PAT: ${{ secrets.AZURE_PAT }}  # Reference the secret for Azure PAT
+        AZURE_PAT: ${{ secrets.AZURE_PAT }}
       run: |
         # Add Azure DevOps remote repository
-        git remote add azure https://muhammadrhuda2025@dev.azure.com/muhammadrhuda2025/UBHub/_git/UBLoader
+        git remote add azure https://muhammadrhuda2025@dev.azure.com/muhammadrhuda2025/UBHub/_git/Script-Roblox
 
         # Authenticate using the Azure PAT
         git config --global http.https://dev.azure.com/.extraheader "AUTHORIZATION: bearer $AZURE_PAT"
