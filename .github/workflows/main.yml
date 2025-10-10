@@ -1,32 +1,24 @@
 name: Sync GitHub to Azure DevOps
-
 on:
   push:
     branches:
       - main
-
 jobs:
   sync:
     runs-on: ubuntu-latest 
-
     steps:
-    # Step 1: Checkout the GitHub Repository with full history
     - name: Checkout GitHub Repository
       uses: actions/checkout@v3
       with:
         fetch-depth: 0 
-
-    # Step 2: Set up Git
     - name: Set up Git
       run: |
         git config --global user.name "Muhammad H"
         git config --global user.email "you@example.com"
-
-    # Step 3: Sync to Azure DevOps
     - name: Sync to Azure DevOps
       env:
         AZ_PAT: ${{ secrets.AZ_PAT }}
       run: |
-        git remote add azure https://muhammadrhuda2025@dev.azure.com/muhammadrhuda2025/UBHub/_git/Script-Roblox
+        git remote add azure https://mhuda2025@dev.azure.com/mhuda25/UBHub/_git/Script-Roblox
         git config --global http.https://dev.azure.com/.extraheader "AUTHORIZATION: bearer $AZ_PAT"
         git push azure main --force
